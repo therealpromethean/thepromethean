@@ -1,0 +1,226 @@
+@font-face {
+    font-family: 'Jember Sketch';
+    src: url('assets/jember_sketch.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Potato Sans';
+    src: url('assets/potato_sans.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #000000; /* Black background to prevent white flash */
+    margin: 0;
+    padding: 0;
+}
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none; /* Disable default touch actions - we handle panning manually */
+    -webkit-touch-callout: none; /* Disable iOS callout on long press */
+    -webkit-user-select: none; /* Disable text selection on touch */
+    user-select: none;
+}
+
+#canvas-container {
+    touch-action: none; /* Also disable touch actions on container */
+}
+
+/* Sticky transparent header with logo */
+#logo-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 80px; /* Minimum header height */
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    background: transparent; /* Transparent header */
+    z-index: 1000;
+    pointer-events: none; /* Allow clicks to pass through to canvas */
+    opacity: 0; /* Hide initially to prevent glimpse before loading screen */
+    visibility: hidden; /* Hide initially to prevent glimpse before loading screen */
+}
+
+#logo-wrapper {
+    position: relative;
+    display: inline-block;
+    pointer-events: auto; /* Allow pointer events on wrapper */
+}
+
+#main-logo, #main-logo-closed {
+    max-width: min(15vw, 200px); /* Responsive: 15% of viewport width, max 200px */
+    max-height: min(15vh, 200px); /* Responsive: 15% of viewport height, max 200px */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    pointer-events: auto; /* Logo itself can be clicked if needed */
+    transition: opacity 0.3s ease-in-out;
+}
+
+#main-logo-closed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none; /* Don't block clicks on the main logo */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    #logo-container {
+        padding: 15px;
+    }
+    
+    #main-logo, #main-logo-closed {
+        max-width: min(20vw, 150px);
+        max-height: min(20vh, 150px);
+    }
+}
+
+@media (max-width: 480px) {
+    #logo-container {
+        padding: 10px;
+    }
+    
+    #main-logo, #main-logo-closed {
+        max-width: min(25vw, 120px);
+        max-height: min(25vh, 120px);
+    }
+}
+
+/* Audio control icon - sticky bottom right */
+.audio-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: auto;
+    height: auto;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    pointer-events: auto;
+    opacity: 0; /* Hidden by default with opacity */
+    visibility: hidden;
+}
+
+.audio-control.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.audio-control:hover {
+    transform: scale(1.1);
+}
+
+.audio-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+    display: block;
+}
+
+.audio-control.muted .audio-icon {
+    opacity: 0.5;
+}
+
+/* Responsive audio control */
+@media (max-width: 768px) {
+    .audio-control {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .audio-icon {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+@media (max-width: 480px) {
+    .audio-control {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .audio-icon {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* YouTube video container wrapper - outer container for border */
+#youtube-screen-video-container {
+    position: fixed;
+    pointer-events: auto;
+    z-index: 999; /* Above PIXI canvas, below instruction overlay */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    /* Create trapezoid shape: top narrower than bottom (perspective view) */
+    clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);
+    background-color: #000000;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+#youtube-screen-video-container.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Inner container with clip-path for video content - creates border effect */
+#youtube-screen-video-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    /* Create trapezoid shape: top narrower than bottom (perspective view) */
+    clip-path: polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%);
+    overflow: hidden;
+}
+
+/* YouTube video iframe overlay for screen */
+#youtube-screen-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+

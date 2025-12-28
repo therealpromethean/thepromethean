@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found - The Prometheans</title>
+    <!-- Theme-aware favicon -->
+    <link id="favicon" rel="icon" type="image/png" href="assets/light_favicon.png">
+    <script>
+        (function() {
+            function updateFavicon() {
+                const favicon = document.getElementById('favicon');
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    favicon.href = 'assets/dark_favicon.png';
+                } else {
+                    favicon.href = 'assets/light_favicon.png';
+                }
+            }
+            // Set initial favicon
+            updateFavicon();
+            // Listen for theme changes
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Finger Paint', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .error-code {
+            font-size: clamp(6rem, 15vw, 12rem);
+            font-weight: bold;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 40px rgba(255, 255, 255, 0.3),
+                0 0 60px rgba(255, 255, 255, 0.1);
+            animation: glitch 3s infinite;
+            letter-spacing: clamp(5px, 2vw, 20px);
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-2px, 2px);
+            }
+            40% {
+                transform: translate(-2px, -2px);
+            }
+            60% {
+                transform: translate(2px, 2px);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+        }
+
+        .error-message {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            margin-bottom: 40px;
+            opacity: 0.9;
+            letter-spacing: clamp(1px, 0.5vw, 3px);
+            text-transform: uppercase;
+        }
+
+        .error-description {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            margin-bottom: 50px;
+            opacity: 0.7;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            margin-bottom: 40px;
+        }
+
+        .logo-container img {
+            max-width: clamp(120px, 25vw, 200px);
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: clamp(12px, 2vw, 15px) clamp(30px, 5vw, 40px);
+            border-radius: 30px;
+            text-decoration: none;
+            font-family: 'Finger Paint', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: clamp(1px, 0.3vw, 2px);
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            .error-code {
+                margin-bottom: 15px;
+            }
+
+            .error-message {
+                margin-bottom: 30px;
+            }
+
+            .error-description {
+                margin-bottom: 40px;
+                padding: 0 15px;
+            }
+
+            .logo-container {
+                margin-bottom: 30px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 20px 10px;
+            }
+
+            .error-code {
+                margin-bottom: 10px;
+                font-size: clamp(4rem, 20vw, 6rem);
+            }
+
+            .error-message {
+                margin-bottom: 20px;
+                font-size: clamp(1rem, 5vw, 1.2rem);
+            }
+
+            .error-description {
+                margin-bottom: 30px;
+                padding: 0 10px;
+                font-size: clamp(0.8rem, 3vw, 0.9rem);
+                line-height: 1.5;
+            }
+
+            .logo-container {
+                margin-bottom: 20px;
+            }
+
+            .logo-container img {
+                max-width: clamp(100px, 30vw, 150px);
+            }
+
+            .button-group {
+                gap: 12px;
+            }
+
+            .btn {
+                max-width: 280px;
+                padding: 12px 30px;
+                font-size: clamp(0.85rem, 3vw, 0.9rem);
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px 8px;
+            }
+
+            .error-code {
+                font-size: clamp(3.5rem, 25vw, 5rem);
+                margin-bottom: 8px;
+            }
+
+            .error-message {
+                font-size: clamp(0.9rem, 6vw, 1rem);
+                margin-bottom: 15px;
+            }
+
+            .error-description {
+                font-size: clamp(0.75rem, 3.5vw, 0.85rem);
+                margin-bottom: 25px;
+                padding: 0 8px;
+                line-height: 1.4;
+            }
+
+            .logo-container {
+                margin-bottom: 15px;
+            }
+
+            .logo-container img {
+                max-width: clamp(80px, 35vw, 120px);
+            }
+
+            .button-group {
+                gap: 10px;
+            }
+
+            .btn {
+                max-width: 100%;
+                padding: 10px 25px;
+                font-size: clamp(0.8rem, 3.5vw, 0.85rem);
+            }
+        }
+
+        @media (max-width: 320px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                padding: 12px 5px;
+            }
+
+            .error-code {
+                font-size: clamp(3rem, 30vw, 4.5rem);
+            }
+
+            .error-message {
+                font-size: clamp(0.85rem, 7vw, 0.95rem);
+            }
+
+            .error-description {
+                font-size: clamp(0.7rem, 4vw, 0.8rem);
+            }
+
+            .btn {
+                padding: 8px 20px;
+            }
+        }
+
+        /* Floating particles effect */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 10s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/main_logo.png" alt="The Prometheans Logo" onclick="window.location.href='/'">
+        </div>
+        
+        <div class="error-code">404</div>
+        <div class="error-message">Page Not Found</div>
+        <div class="error-description">
+            The page you're looking for doesn't exist or has been moved. 
+            Let's get you back on track.
+        </div>
+
+        <div class="button-group">
+            <a href="/" class="btn btn-primary">Go Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 15000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 500);
+
+        // Add click handler to logo
+        document.querySelector('.logo-container img').addEventListener('click', () => {
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Prometheans</title>
+    <!-- Theme-aware favicon -->
+    <link id="favicon" rel="icon" type="image/png" href="assets/light_favicon.png">
+    <script>
+        (function() {
+            function updateFavicon() {
+                const favicon = document.getElementById('favicon');
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    favicon.href = 'assets/dark_favicon.png';
+                } else {
+                    favicon.href = 'assets/light_favicon.png';
+                }
+            }
+            // Set initial favicon
+            updateFavicon();
+            // Listen for theme changes
+            if (window.matchMedia) {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+            }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
+    <!-- Preload Google Font for better performance -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap">
+    <link rel="preload" href="assets/digital.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @font-face {
+            font-family: 'Digital';
+            src: url('assets/digital.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* Use swap for better loading - shows fallback immediately */
+        }
+
+        /* Loading Screen for Redirects (same as community.html) */
+        .redirect-loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none;
+        }
+
+        .redirect-loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .redirect-loading-screen-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .redirect-loading-logo {
+            max-width: 400px;
+            width: 80%;
+            height: auto;
+            margin-bottom: 20px;
+            opacity: 1 !important;
+            display: block !important;
+            visibility: visible !important;
+            filter: brightness(1);
+            animation: tvGlitch 0.12s steps(4) infinite;
+            position: relative;
+        }
+
+        .redirect-loading-logo.stop-glitch {
+            animation: none;
+        }
+
+        .redirect-loading-logo.stop-glitch::before {
+            animation: none;
+            display: none;
+        }
+
+        .redirect-loading-logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15) 0px,
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1;
+            animation: scanLine 0.1s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(4px);
+            }
+        }
+
+        @keyframes tvGlitch {
+            0% {
+                transform: translate(0, 0);
+                filter: brightness(1);
+                clip-path: inset(0 0 0 0);
+            }
+            10% {
+                transform: translate(-2px, 0);
+                filter: brightness(1.1);
+                clip-path: inset(0 0 98% 0);
+            }
+            20% {
+                transform: translate(2px, 0);
+                filter: brightness(0.9);
+                clip-path: inset(2% 0 0 0);
+            }
+            30% {
+                transform: translate(0, 0);
+                filter: brightness(1.2);
+                clip-path: inset(0 0 0 0);
+            }
+            40% {
+                transform: translate(-1px, 1px);
+                filter: brightness(0.8);
+                clip-path: inset(0 0 95% 0);
+            }
+            50% {
+                transform: translate(1px, -1px);
+                filter: brightness(1.15);
+                clip-path: inset(5% 0 0 0);
+            }
+            60% {
+                transform: translate(-3px, 0);
+                filter: brightness(0.95);
+                clip-path: inset(0 0 97% 0);
+            }
+            70% {
+                transform: translate(3px, 0);
+                filter: brightness(1.05);
+                clip-path: inset(3% 0 0 0);
+            }
+            80% {
+                transform: translate(0, 0);
+                filter: brightness(1);
+                clip-path: inset(0 0 0 0);
+            }
+            90% {
+                transform: translate(-1px, 0);
+                filter: brightness(1.1);
+                clip-path: inset(0 0 99% 0);
+            }
+            100% {
+                transform: translate(0, 0);
+                filter: brightness(1);
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        .redirect-loading-percentage {
+            margin-top: 0;
+            font-family: 'Digital', 'Courier New', 'Monaco', 'Menlo', monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.4),
+                0 0 10px rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.2em;
+            opacity: 1 !important;
+            font-variant-numeric: tabular-nums;
+            display: block !important;
+            visibility: visible !important;
+            text-align: center;
+        }
+
+        .redirect-loading-percentage::after {
+            content: '%';
+            margin-left: 5px;
+        }
+
+        /* Responsive Design for Loading Screen */
+        @media (max-width: 768px) {
+            .redirect-loading-logo {
+                max-width: 280px;
+                width: 70%;
+                margin-bottom: 15px;
+            }
+
+            .redirect-loading-percentage {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .redirect-loading-logo {
+                max-width: 200px;
+                width: 60%;
+                margin-bottom: 12px;
+            }
+
+            .redirect-loading-percentage {
+                font-size: 1.5rem;
+                text-shadow: 
+                    0 0 3px rgba(255, 255, 255, 0.4),
+                    0 0 6px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        @media (max-width: 360px) {
+            .redirect-loading-logo {
+                max-width: 160px;
+                width: 55%;
+                margin-bottom: 10px;
+            }
+
+            .redirect-loading-percentage {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="logo-container">
+        <div id="logo-wrapper">
+            <img id="main-logo" src="assets/main_logo.png" alt="The Prometheans Logo">
+            <img id="main-logo-closed" src="assets/main_logo_closed.png" alt="The Prometheans Logo Closed">
+        </div>
+    </div>
+    <div id="canvas-container"></div>
+    <!-- Audio control icon - sticky bottom right -->
+    <div id="audio-control" class="audio-control">
+        <img id="audio-icon-unmuted" class="audio-icon" src="assets/audio_on.png" alt="Audio On" style="display: block;">
+        <img id="audio-icon-muted" class="audio-icon" src="assets/audio_off.png" alt="Audio Off" style="display: none;">
+    </div>
+    <!-- Global API Configuration - Load this first before any other scripts -->
+    <script src="api-config.js"></script>
+    <!-- Pre-fetch YouTube video ID early to reduce loading delay -->
+    <script>
+        // Fetch YouTube video ID immediately after API config loads
+        (async function() {
+            // Wait for API_BASE_URL to be available
+            let attempts = 0;
+            const maxAttempts = 50; // 5 seconds max wait
+            while (!window.API_BASE_URL && attempts < maxAttempts) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
+            }
+            
+            if (window.API_BASE_URL) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+                    
+                    const response = await fetch(`${window.API_BASE_URL}/api/v1/youtube-video`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        window.YOUTUBE_VIDEO_ID = data.video_id || 'zlMFsDJNneE';
+                    } else {
+                        window.YOUTUBE_VIDEO_ID = 'zlMFsDJNneE';
+                    }
+                } catch (error) {
+                    window.YOUTUBE_VIDEO_ID = 'zlMFsDJNneE';
+                }
+            } else {
+                window.YOUTUBE_VIDEO_ID = 'zlMFsDJNneE';
+            }
+        })();
+    </script>
+    <script src="libs/pixi.js"></script>
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- Suppress YouTube postMessage origin mismatch errors (non-critical) -->
+    <script>
+        // Override console.error to suppress YouTube's postMessage origin mismatch warnings
+        // This is a known issue with YouTube's iframe API that doesn't affect functionality
+        (function() {
+            const originalError = console.error;
+            console.error = function(...args) {
+                // Suppress the specific YouTube postMessage origin mismatch error
+                const errorMessage = args.join(' ');
+                if (errorMessage.includes('Failed to execute \'postMessage\' on \'DOMWindow\'') && 
+                    errorMessage.includes('www.youtube.com')) {
+                    // Suppress this specific error - it's non-critical
+                    return;
+                }
+                // Call original console.error for all other errors
+                originalError.apply(console, args);
+            };
+        })();
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
+
+
