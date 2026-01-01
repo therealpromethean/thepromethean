@@ -2,13 +2,110 @@
   publish = "."
   command = ""
 
+# Enable automatic compression and minification
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = false
+  minify = true
+
+[build.processing.js]
+  bundle = false
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+# Clean URLs - hide .html extensions
+# These must come BEFORE the catch-all redirect below
+[[redirects]]
+  from = "/our_team"
+  to = "/our_team.html"
+  status = 200
+
+[[redirects]]
+  from = "/community"
+  to = "/community.html"
+  status = 200
+
+[[redirects]]
+  from = "/news"
+  to = "/news.html"
+  status = 200
+
+# Block direct access to index.html and /index
+# These return 404 to hide file structure from users
+[[redirects]]
+  from = "/index.html"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/index"
+  to = "/404.html"
+  status = 404
+
+# Optional: Redirect .html URLs to clean URLs (301 for SEO)
+# Uncomment these if you want /our_team.html to redirect to /our_team
+# [[redirects]]
+#   from = "/our_team.html"
+#   to = "/our_team"
+#   status = 301
+#
+# [[redirects]]
+#   from = "/community.html"
+#   to = "/community"
+#   status = 301
+#
+# [[redirects]]
+#   from = "/news.html"
+#   to = "/news"
+#   status = 301
+
+# Catch-all for SPA routing (must be last)
+# Root "/" will serve index.html internally, but /index.html and /index will 404 above
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+# Optimized cache headers for static assets (Netlify automatically handles compression)
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.avif"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.mp3"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.ttf"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*.otf"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
@@ -31,4 +128,12 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600, must-revalidate"
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
 

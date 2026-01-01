@@ -27,9 +27,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
-    <!-- Preload Google Font for better performance -->
+    <!-- Preload critical resources for faster initial load -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap">
     <link rel="preload" href="assets/digital.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/main_logo.png" as="image">
+    <link rel="preload" href="assets/loading_screen_logo.png" as="image">
+    <link rel="preload" href="assets/bg1.avif" as="image">
+    <link rel="preload" href="libs/pixi.js" as="script">
+    <link rel="preload" href="app.js" as="script">
+    <link rel="preload" href="styles.css" as="style">
     <link rel="stylesheet" href="styles.css">
     <style>
         @font-face {
@@ -245,15 +251,15 @@
 <body>
     <div id="logo-container">
         <div id="logo-wrapper">
-            <img id="main-logo" src="assets/main_logo.png" alt="The Prometheans Logo">
-            <img id="main-logo-closed" src="assets/main_logo_closed.png" alt="The Prometheans Logo Closed">
+            <img id="main-logo" src="assets/main_logo.png" alt="The Prometheans Logo" fetchpriority="high" loading="eager">
+            <img id="main-logo-closed" src="assets/main_logo_closed.png" alt="The Prometheans Logo Closed" loading="lazy">
         </div>
     </div>
     <div id="canvas-container"></div>
     <!-- Audio control icon - sticky bottom right -->
     <div id="audio-control" class="audio-control">
-        <img id="audio-icon-unmuted" class="audio-icon" src="assets/audio_on.png" alt="Audio On" style="display: block;">
-        <img id="audio-icon-muted" class="audio-icon" src="assets/audio_off.png" alt="Audio Off" style="display: none;">
+        <img id="audio-icon-unmuted" class="audio-icon" src="assets/audio_on.png" alt="Audio On" style="display: block;" loading="lazy">
+        <img id="audio-icon-muted" class="audio-icon" src="assets/audio_off.png" alt="Audio Off" style="display: none;" loading="lazy">
     </div>
     <!-- Global API Configuration - Load this first before any other scripts -->
     <script src="api-config.js"></script>
