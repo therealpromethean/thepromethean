@@ -66,10 +66,10 @@
 #   to = "/news"
 #   status = 301
 
-# Catch-all for SPA routing (must be last)
-# Root "/" will serve index.html internally, but /index.html and /index will 404 above
+# Only redirect root path to index.html
+# Invalid routes will return 404 (Netlify default behavior)
 [[redirects]]
-  from = "/*"
+  from = "/"
   to = "/index.html"
   status = 200
 
