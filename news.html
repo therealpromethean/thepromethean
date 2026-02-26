@@ -994,6 +994,15 @@
         }
 
         /* Description - Comic Style */
+        .timeline-image {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
         .timeline-excerpt {
             font-size: clamp(1rem, 2.8vw, 1.2rem);
             color: #2a2a2a;
@@ -1522,6 +1531,7 @@
                         <span class="timeline-date">${item.date} <span class="timezone">${item.timezone || '(UTC)'}</span></span>
                         <span class="timeline-category">${item.category}</span>
                         <h2 class="timeline-title">${item.title}</h2>
+                        ${item.image ? `<img src="${item.image}" alt="${item.title}" class="timeline-image" loading="lazy">` : ''}
                         <p class="timeline-excerpt">${item.excerpt}</p>
                         ${item.link ? `<a href="${item.link}" target="${linkTarget}" ${linkRel} class="timeline-link">Read More</a>` : ''}
                     </div>
