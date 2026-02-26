@@ -4,30 +4,16 @@
     
   
     
-    // Option 1: Auto-detect (recommended - works for both local and production)
-    const hostname = window.location.hostname;
     let API_BASE_URL;
     
     // ============================================
     // PRODUCTION BACKEND URL
-    // Set this to your Railway/production backend URL
+    // Set this to your Cloudflare Worker URL after deploying
+    // Format: https://prometheans-backend.<your-subdomain>.workers.dev
     // ============================================
-    const PRODUCTION_API_URL = 'https://thebackend-production.up.railway.app';
-    
-    // ============================================
-    // CONFIGURATION OPTIONS
-    // ============================================
-    
+    const PRODUCTION_API_URL = 'https://prometheans-backend.therealpromethean.workers.dev';
 
-    
-    // Option B: Auto-detect (default - localhost uses local backend, production uses Railway)
-    if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '') {
-
-        API_BASE_URL = PRODUCTION_API_URL;
-    } else {
-        // Production - use Railway backend
-        API_BASE_URL = PRODUCTION_API_URL;
-    }
+    API_BASE_URL = PRODUCTION_API_URL;
 
     
     // ============================================

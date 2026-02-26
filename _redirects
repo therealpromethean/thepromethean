@@ -2,11 +2,3 @@
 /community /community.html 200
 /our_team /our_team.html 200
 /news /news.html 200
-
-# Redirect direct .html access to clean URLs (optional)
-/community.html /community 301!
-/our_team.html /our_team 301!
-/news.html /news 301!
-
-# SPA fallback - serve index.html for unknown routes
-/* /index.html 200
