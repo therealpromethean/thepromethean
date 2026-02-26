@@ -2956,8 +2956,9 @@
                     // Ignore errors when destroying
                 }
                 youtubePlayer = null;
+                window.youtubePlayer = null;
             }
-            
+
             // Create YouTube player with IFrame API
             try {
                 youtubePlayer = new YT.Player('youtube-screen-video', {
@@ -2978,11 +2979,12 @@
                         'onStateChange': onYouTubePlayerStateChange
                     }
                 });
+                window.youtubePlayer = youtubePlayer;
             } catch (error) {
                 // Error creating YouTube player
             }
         }
-        
+
         // Start initialization - wait for both YouTube IFrame API and api-config.js
         function startYouTubeInitialization() {
             // Check if YouTube IFrame API is ready

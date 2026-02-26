@@ -293,6 +293,12 @@
                     if (response.ok) {
                         const data = await response.json();
                         window.YOUTUBE_VIDEO_ID = data.video_id || 'zlMFsDJNneE';
+                        // If the player already initialized with the fallback ID, update it now
+                        if (window.youtubePlayer && typeof window.youtubePlayer.loadVideoById === 'function') {
+                            try {
+                                window.youtubePlayer.loadVideoById({ videoId: window.YOUTUBE_VIDEO_ID, startSeconds: 0 });
+                            } catch(e) {}
+                        }
                     } else {
                         window.YOUTUBE_VIDEO_ID = 'zlMFsDJNneE';
                     }
