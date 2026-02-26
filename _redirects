@@ -1,4 +1,2 @@
-# Clean URLs - hide .html extensions
-/community /community.html 200
-/our_team /our_team.html 200
-/news /news.html 200
+# Cloudflare Pages handles clean URLs automatically (Pretty URLs is on by default).
+# No routing rules needed here — /community serves community.html natively.
